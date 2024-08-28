@@ -1,0 +1,28 @@
+version: "1"
+
+package:
+  id: io.github.Kromophone
+  name: Kromophone
+  version: 0.0.3.1
+  kind: app
+  description: |
+    The Kromophone is a Color-to-Sound sensory substitution device created with tasks such as navigation, environment, and object recognition in mind.
+
+command:
+  - /opt/apps/io.github.Kromophone/files/bin/Kromophone
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/zach-capalbo/Kromophone.git
+    version: master
+    commit: 1fa33c5cc2f65e3a2ff4e1794ed883b95dd6a1fb
+
+build: |
+  cd /project/linglong/sources/Kromophone.git
+  git apply ../../../0001-install.patch
+  qmake -makefile PREFIX=${PREFIX} LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
+  make -j$(nproc)
+  make install
