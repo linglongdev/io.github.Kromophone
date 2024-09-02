@@ -1,0 +1,65 @@
+From 871bf9cf3e605a2aad9598587d6a3e7157b2b14d Mon Sep 17 00:00:00 2001
+From: wjyrich <1071633242@qq.com>
+Date: Thu, 15 Aug 2024 14:21:59 +0800
+Subject: [PATCH] install
+
+---
+ Kromophone.desktop | 12 ++++++++++++
+ Kromophone.pro     |  9 +++++++--
+ SoundEffect.cpp    |  2 +-
+ 3 files changed, 20 insertions(+), 3 deletions(-)
+ create mode 100644 Kromophone.desktop
+
+diff --git a/Kromophone.desktop b/Kromophone.desktop
+new file mode 100644
+index 0000000..1779642
+--- /dev/null
++++ b/Kromophone.desktop
+@@ -0,0 +1,12 @@
++[Desktop Entry]
++Categories=Accessibility;Qt;Utility;
++Exec=Kromophone
++Name=Kromophone
++Name[zh_CN]=Kromophone
++Icon=Kromophone
++StartupNotify=false
++Terminal=false
++Type=Application
++GenericName=Kromophone
++Version=0.3
++
+diff --git a/Kromophone.pro b/Kromophone.pro
+index dae0983..c7e88de 100644
+--- a/Kromophone.pro
++++ b/Kromophone.pro
+@@ -32,9 +32,14 @@ android {
+ 		android/AndroidManifest.xml
+ }
+ else:unix {
+-	target.path = /home/pi/kromophone
++	target.path = $$PREFIX/bin
+ 	INSTALLS += target
+-
++	desktop.files = Kromophone.desktop
++	desktop.path = $$PREFIX/share/applications/
++	icons.path = $$PREFIX/share/icons
++	icons.files = Resources/Kromophone.png
++	
++	INSTALLS += desktop icons
+ #	CONFIG += opencv
+ 
+ 	opencv: DEFINES += USE_OPENCV
+diff --git a/SoundEffect.cpp b/SoundEffect.cpp
+index d1626f5..3d5a111 100644
+--- a/SoundEffect.cpp
++++ b/SoundEffect.cpp
+@@ -1,5 +1,5 @@
+ #include "SoundEffect.h"
+-
++#include <cmath>
+ SoundEffect::SoundEffect(int durationMs, float volume)
+     : duration((float) durationMs / 1000.0f),
+       index(0),
+-- 
+2.43.4
+
